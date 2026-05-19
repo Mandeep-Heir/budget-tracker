@@ -4,9 +4,11 @@
     <title>Budget Tracker</title>
     <body>
       <h1>Budget Tracker</h1>
-      <input type = "text" placeholder="enter the expense">
-      <input type ="number" placeholder = "enter the amount">
-      <button id ="addBtn">ADD Expense</button>
+      <input type = "text" id="expense" placeholder="enter the expense">
+      <input type ="number"id = "amount" placeholder = "enter the amount">
+      
+      <button onclick="AddExpense()">ADD Expense</button>
+      <p id="output"></p>
       <script src="script.js"></script>
       </body>
   </head>
