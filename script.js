@@ -7,5 +7,11 @@ function AddExpense(){
   //  document.getElementById("expense").value = "";  
     expenses.push(expense);
     console.log(expenses);
+  //  document.getElementById("expenseList").innerHTML =  expense;
+  let list = document.getElementById("expenseList");
+  list.innerHTML="";
+  for(let i = 0 ; i < expenses.length; i++){
+    list.innerHTML+="<li>"  + expenses[i] +"</li>";
+  }
 
 }
