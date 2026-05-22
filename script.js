@@ -1,5 +1,6 @@
 let expenses = [];
 let total = 0;
+let editIndex = -1;
 
 let savedExpenses = localStorage.getItem("expenses");
 
@@ -23,8 +24,9 @@ function AddExpense() {
     let expense = document.getElementById("expense").value;
 
     let amount = document.getElementById("amount").value;
+    let category = document.getElementById("category").value;
 
-    if (expense === "" || amount === "") {
+    if (expense === "" || amount === "" || category === "") {
         alert("Please enter both expense and amount.");
         return;
     }
@@ -36,12 +38,20 @@ function AddExpense() {
 
     let expenseObject = {
         name: expense,
-        amount: amount
+        amount: amount,
+        category: category
+        
     };
 
-    expenses.push(expenseObject);
+    // expenses.push(expenseObject);
 
-    total = total + Number(amount);
+    // total = total + Number(amount);
+    if (editIndex === -1) {
+        expenses.push(expenseObject);
+       } else {
+        expenses[editIndex] = expenseObject;
+        editIndex = -1;
+       }
 
     localStorage.setItem("expenses", JSON.stringify(expenses));
     localStorage.setItem("total", total);
@@ -82,6 +92,12 @@ function DeleteExpense(index) {
 
 }
 
+function EditExpense(index) {
+    document.getElementById("expense").value = expenses[index].name;
+    document.getElementById("amount").value = expenses[index].amount;
+    editIndex = index;
+}
+
 function displayExpenses() {
 
     let list = document.getElementById("expenseList");
@@ -94,9 +110,33 @@ function displayExpenses() {
             + expenses[i].name
             + " - $"
             + expenses[i].amount
-            + " <button onclick='DeleteExpense(" + i + ")'>Delete</button>"
+            + " - "
+            + expenses[i].category
+            + "<button onclick='EditExpense(" + i + ")'>Edit</button>"
+            + "<button onclick='DeleteExpense(" + i + ")'>Delete</button>"
             + "</li>";
 
     }
+  }
 
+    function filterExpenses() {
+    let selectedCategory = document.getElementById("filterCategory").value;
+
+    let list = document.getElementById("expenseList");
+    list.innerHTML = "";
+
+    for (let i = 0; i < expenses.length; i++) {
+        if (selectedCategory === "All" || expenses[i].category === selectedCategory) {
+            list.innerHTML += "<li>"
+                + expenses[i].name
+                + " - $"
+                + expenses[i].amount
+                + " - "
+                + expenses[i].category
+                + " <button onclick='EditExpense(" + i + ")'>Edit</button>"
+                + " <button onclick='DeleteExpense(" + i + ")'>Delete</button>"
+                + "</li>";
+        }
+    }
 }
+
