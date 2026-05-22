@@ -43,14 +43,16 @@ function AddExpense() {
         
     };
 
-    // expenses.push(expenseObject);
-
-    // total = total + Number(amount);
+   
     if (editIndex === -1) {
         expenses.push(expenseObject);
        } else {
         expenses[editIndex] = expenseObject;
         editIndex = -1;
+       }
+       total = 0;
+       for(let i = 0; i < expenses.length; i++) {
+        total = total + Number(expenses[i].amount);
        }
 
     localStorage.setItem("expenses", JSON.stringify(expenses));
@@ -65,6 +67,8 @@ function AddExpense() {
     document.getElementById("expense").value = "";
 
     document.getElementById("amount").value = "";
+
+    document.getElementById("category").value = "";
 
 }
 
@@ -95,6 +99,7 @@ function DeleteExpense(index) {
 function EditExpense(index) {
     document.getElementById("expense").value = expenses[index].name;
     document.getElementById("amount").value = expenses[index].amount;
+    document.getElementById("category").value = expenses[index].category;
     editIndex = index;
 }
 
@@ -112,8 +117,8 @@ function displayExpenses() {
             + expenses[i].amount
             + " - "
             + expenses[i].category
-            + "<button onclick='EditExpense(" + i + ")'>Edit</button>"
-            + "<button onclick='DeleteExpense(" + i + ")'>Delete</button>"
+            + "<button class='edit-btn' onclick='EditExpense(" + i + ")'>Edit</button>"
+            + "<button class='delete-btn' onclick='DeleteExpense(" + i + ")'>Delete</button>"
             + "</li>";
 
     }
@@ -133,8 +138,8 @@ function displayExpenses() {
                 + expenses[i].amount
                 + " - "
                 + expenses[i].category
-                + " <button onclick='EditExpense(" + i + ")'>Edit</button>"
-                + " <button onclick='DeleteExpense(" + i + ")'>Delete</button>"
+                + " <button class='edit-btn' onclick='EditExpense(" + i + ")'>Edit</button>"
+                + " <button class='delete-btn' onclick='DeleteExpense(" + i + ")'>Delete</button>"
                 + "</li>";
         }
     }
